@@ -1,0 +1,32 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/python:3.7
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: install dependencies
+          command: |
+            pip install pipenv --user
+            pipenv install --dev
+      - run:
+          name: run tests
+          command: |
+            pipenv run pytest tests/ -vv --cov
+            pipenv run flake8 --exclude=build exclude=venv* --statistics -v
+
+wworkflows:
+  version: 2
+  build_accept_deploy:
+    jobs:
+      - build:
+          filter:
+            tags:
+              only: /^v.*/
