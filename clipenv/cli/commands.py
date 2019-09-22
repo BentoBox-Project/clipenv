@@ -12,7 +12,7 @@ def add(variable_name, variable_value, profile_file_path):
         exists = os.path.isfile(profile_file_path)  # The profile file most exists
         if exists:
             with open(profile_file_path, "a") as profile_file:
-                profile_file.write(F"{variable_name}='{variable_value}'")
+                profile_file.write(F"export {variable_name}='{variable_value}'")
                 profile_file.write("\n")
             successfully_added = True
         else:
