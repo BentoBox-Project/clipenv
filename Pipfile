@@ -6,9 +6,11 @@ verify_ssl = true
 [dev-packages]
 pytest = "*"
 pre-commit = "*"
+testfixtures = "*"
+flake8 = "*"
+pytest-cov = "*"
 
 [packages]
-testfixtures = "*"
 
 [requires]
 python_version = "3.7"
