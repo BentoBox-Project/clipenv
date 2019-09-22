@@ -9,10 +9,12 @@ def add(variable_name, variable_value, profile_file_path):
     """
     successfully_added = False
     try:
-        exists = os.path.isfile(profile_file_path)  # The profile file most exists
+        # The profile file most exists
+        exists = os.path.isfile(profile_file_path)
         if exists:
             with open(profile_file_path, "a") as profile_file:
-                profile_file.write(F"export {variable_name}='{variable_value}'")
+                env_var = f"export {variable_name}='{variable_value}'"
+                profile_file.write(env_var)
                 profile_file.write("\n")
             successfully_added = True
         else:

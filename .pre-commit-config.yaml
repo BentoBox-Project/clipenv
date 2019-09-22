@@ -1,0 +1,23 @@
+# See https://pre-commit.com for more information
+# See https://pre-commit.com/hooks.html for more hooks
+default_stages: [commit, push]
+exclude: '__init__'
+default_language_version:
+    python: python3.7.4
+
+repos:
+-   repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.0.0
+    hooks:
+    -   id: flake8
+    -   id: trailing-whitespace
+    -   id: check-yaml
+    -   id: check-added-large-files
+    -   id: check-merge-conflict
+-   repo: local
+    hooks:
+    -   id: tests
+        name: run tests
+        entry: pytest tests/ -vv
+        language: system
+        types: [python]
