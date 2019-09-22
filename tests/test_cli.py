@@ -21,7 +21,7 @@ def default_profile_file(test_dir):
 
 def added_venv_exists(default_profile_file, variable_name, variable_value):
     all_vars = ""
-    variable_line = F"{variable_name}='{variable_value}'"
+    variable_line = F"export {variable_name}='{variable_value}'"
     with open(default_profile_file, "r") as profile_file:
         all_vars = profile_file.read()
     return variable_line in all_vars
