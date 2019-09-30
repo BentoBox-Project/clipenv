@@ -2,7 +2,7 @@ import os
 from .. import exceptions
 
 
-def add(variable_name, variable_value, profile_file_path):
+def add_env_var(variable_name, variable_value, profile_file_path):
     """
     receives a variable name and a value and stores it on the
     previously selected profile file.
