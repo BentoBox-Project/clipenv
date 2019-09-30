@@ -19,3 +19,7 @@ class ClipenvIOError(IOError):
 class ClipenvFileNotFoundError(ClipenvIOError):
     """Raised when a file requested to be loaded can not be opened"""
     pass
+
+
+class InvalidConfigFileOption(KeyError):
+    """Raise when the user enter an invalid file option"""
