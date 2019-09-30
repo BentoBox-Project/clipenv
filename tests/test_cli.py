@@ -30,7 +30,9 @@ def added_venv_exists(default_profile_file, variable_name, variable_value):
 def test_add_venv(default_profile_file):
     variable_name = "TOKEN"
     variable_value = "12345"
-    if commands.add(variable_name, variable_value, default_profile_file):
+    if commands.add_env_var(variable_name=variable_name,
+                            variable_value=variable_value,
+                            profile_file_path=default_profile_file):
         assert added_venv_exists(
             default_profile_file=default_profile_file,
             variable_name=variable_name,
@@ -47,7 +49,9 @@ def test_profile_not_found(test_dir):
     profile_file_path = commands.os.path.join(
         test_dir.path, wrong_profile_file)
     with pytest.raises(exceptions.ClipenvFileNotFoundError):
-        if commands.add(variable_name, variable_value, profile_file_path):
+        if commands.add_env_var(variable_name=variable_name,
+                                variable_value=variable_value,
+                                profile_file_path=profile_file_path):
             assert added_venv_exists(
                 default_profile_file=profile_file_path,
                 variable_name=variable_name,
