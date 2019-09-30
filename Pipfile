@@ -11,6 +11,8 @@ flake8 = "*"
 pytest-cov = "*"
 
 [packages]
+click = "*"
+colored = "*"
 
 [requires]
 python_version = "3.7"
