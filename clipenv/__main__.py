@@ -13,6 +13,10 @@ def clipenv():
 
 @clipenv.command()
 def add():
+    """
+    Adds a new environment variable to a chosen config file hosted in the user
+    home directory.
+    """
     existing_config_files = get_existing_config_files()
     show_config_file_options(file_options=existing_config_files)
     file_option = click.prompt(f"{fg(2)}Enter the option: {attr(0)}", type=int)
