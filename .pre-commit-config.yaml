@@ -16,8 +16,9 @@ repos:
     -   id: check-merge-conflict
 -   repo: local
     hooks:
-    -   id: tests
-        name: run tests
-        entry: pytest tests/ -vv
+    -   id: pytest
+        name: pytest
+        entry: pipenv run pytest tests/ -vv
         language: system
         types: [python]
+        exclude: setup.py
