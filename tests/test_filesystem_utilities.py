@@ -6,6 +6,7 @@ import shutil
 
 from clipenv import CONFIG_FILES
 from clipenv import get_existing_config_files, filepath_from_option
+from clipenv.filesystem_utilities import is_valid_var_name
 
 
 @contextlib.contextmanager
@@ -36,3 +37,13 @@ def test_filepath_from_option():
     with get_temp_dir() as root:
         filepath = filepath_from_option(1, config_files_dict, root=root)
         assert filepath == os.path.join(root, filename)
+
+
+def test_wrong_var_name():
+    wrong_var = "this is wrong"
+    assert is_valid_var_name(wrong_var) is False
+
+
+def test_valid_var_name():
+    wrong_var = "this_is_valid"
+    assert is_valid_var_name(wrong_var) is True
