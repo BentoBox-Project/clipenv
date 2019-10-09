@@ -2,6 +2,7 @@ from testfixtures import TempDirectory
 import pytest
 from clipenv.cli import commands
 from clipenv import exceptions
+import re
 
 PROFILE_FILE_NAME = "profile"
 
@@ -24,7 +25,11 @@ def added_venv_exists(default_profile_file, variable_name, variable_value):
     variable_line = F"export {variable_name}='{variable_value}'"
     with open(default_profile_file, "r") as profile_file:
         all_vars = profile_file.read()
-    return variable_line in all_vars
+    return check_if_string_in_text(variable_line, all_vars)
+
+
+def check_if_string_in_text(needed_string, text):
+    return re.search(needed_string, text)
 
 
 def test_add_venv(default_profile_file):
@@ -52,29 +57,29 @@ def test_profile_not_found(test_dir):
         if commands.add_env_var(variable_name=variable_name,
                                 variable_value=variable_value,
                                 profile_file_path=profile_file_path):
-            assert added_venv_exists(
+            assert not added_venv_exists(
                 default_profile_file=profile_file_path,
                 variable_name=variable_name,
                 variable_value=variable_value
             )
-        else:
-            assert True
 
 
 def test_list_all_venvs(default_profile_file):
     variable_name = "TOKEN"
     variable_value = "12345"
-    if commands.add_env_var(variable_name=variable_name,
-                            variable_value=variable_value,
-                            profile_file_path=default_profile_file):
-        assert variable_name in commands.list_all_env_vars(default_profile_file)
-    else:
-        assert False
+    all_vars = ""
+    successfully_added = commands.add_env_var(
+        variable_name=variable_name,
+        variable_value=variable_value,
+        profile_file_path=default_profile_file)
+    assert successfully_added
+    all_vars = commands.list_all_env_vars(default_profile_file)
+    assert all_vars != ""
+    assert check_if_string_in_text(variable_name, all_vars)
 
 
 def test_list_venvs_missing(default_profile_file):
     variable_name = "TOKEN"
     with pytest.raises(exceptions.ClipenvFileNotFoundError):
-        if variable_name in commands.list_all_env_vars("non_existent_file"):
-            assert False
-
+        assert variable_name not in commands.list_all_env_vars(
+            "non_existent_file")
