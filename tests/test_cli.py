@@ -73,7 +73,7 @@ def test_list_all_venvs(default_profile_file):
         variable_value=variable_value,
         profile_file_path=default_profile_file)
     assert successfully_added
-    all_vars = commands.list_all_env_vars("non_existent_file")
+    all_vars = commands.list_all_env_vars(default_profile_file)
     assert check_if_string_in_text(variable_line, all_vars)
 
 
