@@ -41,9 +41,9 @@ def test_filepath_from_option():
 
 def test_wrong_var_name():
     wrong_var = "this is wrong"
-    assert is_valid_var_name(wrong_var) is False
+    assert not is_valid_var_name(wrong_var)
 
 
 def test_valid_var_name():
-    wrong_var = "this_is_valid"
-    assert is_valid_var_name(wrong_var) is True
+    valid_var = "this_is_valid"
+    assert is_valid_var_name(valid_var)
