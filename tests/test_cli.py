@@ -67,19 +67,20 @@ def test_profile_not_found(test_dir):
 def test_list_all_venvs(default_profile_file):
     variable_name = "TOKEN"
     variable_value = "12345"
-    all_vars = ""
+    variable_line = F"export {variable_name}='{variable_value}'"
     successfully_added = commands.add_env_var(
         variable_name=variable_name,
         variable_value=variable_value,
         profile_file_path=default_profile_file)
     assert successfully_added
-    all_vars = commands.list_all_env_vars(default_profile_file)
-    assert all_vars != ""
-    assert check_if_string_in_text(variable_name, all_vars)
+    all_vars = commands.list_all_env_vars("non_existent_file")
+    assert check_if_string_in_text(variable_line, all_vars)
 
 
 def test_list_venvs_missing(default_profile_file):
     variable_name = "TOKEN"
+    variable_value = "12345"
+    variable_line = F"export {variable_name}='{variable_value}'"
     with pytest.raises(exceptions.ClipenvFileNotFoundError):
-        assert variable_name not in commands.list_all_env_vars(
-            "non_existent_file")
+        all_vars = commands.list_all_env_vars("non_existent_file")
+        assert check_if_string_in_text(variable_line, all_vars)
